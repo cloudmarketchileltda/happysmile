@@ -8,7 +8,6 @@ const HOST = process.env.HOST || "0.0.0.0";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CLIENT_DIR = path.join(__dirname, "dist", "client");
 
-// MIME types for static files
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -28,22 +27,24 @@ const MIME = {
   ".map": "application/json",
 };
 
-// Import the built TanStack Start SSR handler
-const { default: server } = await import("./dist/server/server.js");
+let serverHandler;
+
+async function getHandler() {
+  if (!serverHandler) {
+    const mod = await import("./dist/server/server.js");
+    serverHandler = mod.default || mod;
+  }
+  return serverHandler;
+}
 
 function serveStatic(urlPath, res) {
-  // Normalize path to prevent directory traversal
   const safePath = path.normalize(urlPath).replace(/^(\.\.(\/|\\|$))+/, "");
   const filePath = path.join(CLIENT_DIR, safePath);
 
-  if (!filePath.startsWith(CLIENT_DIR)) {
-    return false;
-  }
+  if (!filePath.startsWith(CLIENT_DIR)) return false;
 
   try {
-    if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
-      return false;
-    }
+    if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) return false;
     const ext = path.extname(filePath).toLowerCase();
     const contentType = MIME[ext] || "application/octet-stream";
     const content = fs.readFileSync(filePath);
@@ -55,32 +56,22 @@ function serveStatic(urlPath, res) {
   }
 }
 
-// Create HTTP server using the SSR fetch handler
 const httpServer = http.createServer(async (req, res) => {
   try {
-    const urlPath = new URL(req.url ?? "/", `http://${HOST}`).pathname;
+    const urlObj = new URL(req.url || "/", `http://${HOST}`);
+    const urlPath = urlObj.pathname;
 
-    // Try to serve static files first
-    if (serveStatic(urlPath, res)) {
-      return;
-    }
+    // Serve static files first
+    if (serveStatic(urlPath, res)) return;
 
-    // For root, also try index.html
-    if (urlPath === "/" || urlPath === "") {
-      if (serveStatic("/index.html", res)) {
-        return;
-      }
-    }
-
-    // Build a standard Request from Node IncomingMessage
+    // Build Request for SSR handler
     const protocol = req.headers["x-forwarded-proto"] || "http";
-    const host = req.headers.host || `${HOST}:${PORT}`;
-    const url = new URL(req.url ?? "/", `${protocol}://${host}`);
+    const host = req.headers["host"] || `${HOST}:${PORT}`;
+    const url = new URL(req.url || "/", `${protocol}://${host}`);
 
-    // Collect body
     const body = await new Promise((resolve) => {
       const chunks = [];
-      req.on("data", (chunk) => chunks.push(chunk));
+      req.on("data", (c) => chunks.push(c));
       req.on("end", () => resolve(Buffer.concat(chunks)));
     });
 
@@ -90,21 +81,23 @@ const httpServer = http.createServer(async (req, res) => {
       body: body.length > 0 ? body : undefined,
     });
 
-    const response = await server.fetch(request, {}, {});
+    const handler = await getHandler();
+    const response = await handler.fetch(request, {}, {});
 
-    // Write response status, headers, body
     res.statusCode = response.status;
     response.headers.forEach((value, key) => {
-      // Skip transfer-encoding as Node handles it
       if (key.toLowerCase() === "transfer-encoding") return;
       res.setHeader(key, value);
     });
+
     const responseBody = await response.arrayBuffer();
     res.end(Buffer.from(responseBody));
   } catch (error) {
     console.error("Request error:", error);
-    res.statusCode = 500;
-    res.end("Internal Server Error");
+    if (!res.headersSent) {
+      res.writeHead(500, { "content-type": "text/html; charset=utf-8" });
+    }
+    res.end("<!DOCTYPE html><html><body><h1>Error interno del servidor</h1></body></html>");
   }
 });
 

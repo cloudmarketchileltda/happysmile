@@ -12,4 +12,4 @@ cmds = ["bun install"]
 cmds = ["bun run build"]
 
 [start]
-cmd = "npm run preview"
+cmd = "node prod-server.mjs"

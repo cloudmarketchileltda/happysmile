@@ -8,9 +8,12 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview --port 80 --host",
-    "start": "NITRO_PORT=80 node .output/server/index.mjs",
+    "start": "NITRO_PORT=${PORT:-80} HOST=${HOST:-0.0.0.0} node .output/server/index.mjs",
     "lint": "eslint .",
     "format": "prettier --write ."
+  },
+  "engines": {
+    "node": ">=22.12.0"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

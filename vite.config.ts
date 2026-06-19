@@ -17,4 +17,9 @@ export default defineConfig({
     port: 8080,
     strictPort: true,
   },
+  preview: {
+    port: 80,
+    host: true,
+    allowedHosts: ["happy.cloudmarket.cl"],
+  },
 });

@@ -46,7 +46,11 @@ export function PortalLayout({ items, portalLabel, userName, userMeta, children 
               {userMeta && <div className="text-muted-foreground">{userMeta}</div>}
             </div>
             <div className="grid h-9 w-9 place-items-center rounded-full bg-brand text-sm font-bold text-brand-foreground">
-              {userName.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+              {userName
+                .split(" ")
+                .map((n) => n[0])
+                .slice(0, 2)
+                .join("")}
             </div>
           </div>
         </div>
@@ -107,7 +111,15 @@ export function PortalLayout({ items, portalLabel, userName, userMeta, children 
   );
 }
 
-export function PageHeader({ title, subtitle, action }: { title: string; subtitle?: string; action?: ReactNode }) {
+export function PageHeader({
+  title,
+  subtitle,
+  action,
+}: {
+  title: string;
+  subtitle?: string;
+  action?: ReactNode;
+}) {
   return (
     <div className="mb-6 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:flex sm:flex-wrap sm:justify-between">
       <div className="min-w-0">
@@ -139,7 +151,9 @@ export function StatCard({
   };
   return (
     <div className={"rounded-xl border p-4 " + toneClass[tone]}>
-      <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{label}</div>
+      <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        {label}
+      </div>
       <div className="mt-2 font-display text-2xl font-bold text-foreground">{value}</div>
       {hint && <div className="mt-1 text-xs text-muted-foreground">{hint}</div>}
     </div>
@@ -162,18 +176,36 @@ export function EstadoBadge({ estado }: { estado: string }) {
   };
   const cls = map[estado] ?? "bg-muted text-muted-foreground";
   return (
-    <span className={"inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium " + cls}>
+    <span
+      className={"inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium " + cls}
+    >
       {estado}
     </span>
   );
 }
 
-export function EmptyState({ icon, title, description, action }: { icon?: ReactNode; title: string; description?: string; action?: ReactNode }) {
+export function EmptyState({
+  icon,
+  title,
+  description,
+  action,
+}: {
+  icon?: ReactNode;
+  title: string;
+  description?: string;
+  action?: ReactNode;
+}) {
   return (
     <div className="rounded-xl border border-dashed border-border bg-card p-10 text-center">
-      {icon && <div className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand">{icon}</div>}
+      {icon && (
+        <div className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand">
+          {icon}
+        </div>
+      )}
       <div className="font-display text-lg font-semibold text-foreground">{title}</div>
-      {description && <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">{description}</p>}
+      {description && (
+        <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">{description}</p>
+      )}
       {action && <div className="mt-4">{action}</div>}
     </div>
   );

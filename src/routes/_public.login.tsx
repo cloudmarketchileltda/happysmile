@@ -67,7 +67,9 @@ function LoginPage() {
               🦷
             </div>
             <h1 className="mt-4 font-display text-3xl font-bold text-foreground">Happy Smile</h1>
-            <p className="mt-1 text-muted-foreground">Selecciona tu perfil para acceder al portal</p>
+            <p className="mt-1 text-muted-foreground">
+              Selecciona tu perfil para acceder al portal
+            </p>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-3">
@@ -82,7 +84,9 @@ function LoginPage() {
                   <div className={"grid h-14 w-14 place-items-center rounded-xl " + p.color}>
                     <Icon className="h-7 w-7" />
                   </div>
-                  <h2 className="mt-4 font-display text-lg font-bold text-foreground">{p.titulo}</h2>
+                  <h2 className="mt-4 font-display text-lg font-bold text-foreground">
+                    {p.titulo}
+                  </h2>
                   <p className="mt-1 text-sm text-muted-foreground">{p.descripcion}</p>
                   <div className="mt-4 flex items-center gap-1 text-sm font-medium text-brand opacity-0 transition-opacity group-hover:opacity-100">
                     Acceder <ChevronRight className="h-3.5 w-3.5" />
@@ -126,7 +130,13 @@ function LoginPage() {
               className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder={perfil!.id === "paciente" ? "maria@mail.cl" : perfil!.id === "profesional" ? "rfuentes@happysmile.cl" : "admin@happysmile.cl"}
+              placeholder={
+                perfil!.id === "paciente"
+                  ? "maria@mail.cl"
+                  : perfil!.id === "profesional"
+                    ? "rfuentes@happysmile.cl"
+                    : "admin@happysmile.cl"
+              }
             />
           </div>
           <div>

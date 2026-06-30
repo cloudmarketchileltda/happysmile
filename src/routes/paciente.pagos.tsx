@@ -12,10 +12,15 @@ function PagosPage() {
   const s = useClinic();
   const trats = s.tratamientos.filter((t) => t.pacienteId === s.pacienteActualId);
   const totalTrat = trats.reduce((a, t) => a + t.costoTotal, 0);
-  const totalPag = trats.reduce((a, t) => a + t.cuotas.filter((c) => c.estado === "Pagado").reduce((x, c) => x + c.monto, 0), 0);
+  const totalPag = trats.reduce(
+    (a, t) => a + t.cuotas.filter((c) => c.estado === "Pagado").reduce((x, c) => x + c.monto, 0),
+    0,
+  );
   const saldo = totalTrat - totalPag;
 
-  const filas = trats.flatMap((t) => t.cuotas.map((c) => ({ ...c, tratamiento: t.nombre, id: `${t.id}-${c.numero}` })));
+  const filas = trats.flatMap((t) =>
+    t.cuotas.map((c) => ({ ...c, tratamiento: t.nombre, id: `${t.id}-${c.numero}` })),
+  );
 
   return (
     <>
@@ -23,7 +28,11 @@ function PagosPage() {
       <div className="grid gap-4 sm:grid-cols-3">
         <StatCard label="Total tratamientos" value={formatCLP(totalTrat)} tone="brand" />
         <StatCard label="Total pagado" value={formatCLP(totalPag)} tone="success" />
-        <StatCard label="Saldo pendiente" value={formatCLP(saldo)} tone={saldo > 0 ? "coral" : "default"} />
+        <StatCard
+          label="Saldo pendiente"
+          value={formatCLP(saldo)}
+          tone={saldo > 0 ? "coral" : "default"}
+        />
       </div>
 
       <div className="mt-6 overflow-hidden rounded-2xl border border-border bg-card">
@@ -45,7 +54,9 @@ function PagosPage() {
                   <td className="p-3 text-muted-foreground">#{c.numero}</td>
                   <td className="p-3 text-right font-semibold">{formatCLP(c.monto)}</td>
                   <td className="p-3">{formatDate(c.vencimiento)}</td>
-                  <td className="p-3"><EstadoBadge estado={c.estado} /></td>
+                  <td className="p-3">
+                    <EstadoBadge estado={c.estado} />
+                  </td>
                 </tr>
               ))}
             </tbody>

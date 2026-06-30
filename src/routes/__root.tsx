@@ -75,10 +75,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Happy Smile — Portal Clínico" },
-      { name: "description", content: "Portal de gestión clínica de Happy Smile: pacientes, profesionales y administración." },
+      {
+        name: "description",
+        content:
+          "Portal de gestión clínica de Happy Smile: pacientes, profesionales y administración.",
+      },
       { name: "author", content: "Happy Smile" },
       { property: "og:title", content: "Happy Smile — Portal Clínico" },
-      { property: "og:description", content: "Sonríe con confianza. Agenda, tratamientos y atención dental integral." },
+      {
+        property: "og:description",
+        content: "Sonríe con confianza. Agenda, tratamientos y atención dental integral.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

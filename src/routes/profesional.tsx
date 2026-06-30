@@ -19,7 +19,12 @@ function ProfLayout() {
   const prof = s.profesionales.find((p) => p.id === s.profesionalActualId)!;
   const esp = s.especialidades.find((e) => e.id === prof.especialidadId);
   return (
-    <PortalLayout items={items} portalLabel="Portal Profesional" userName={prof.nombre} userMeta={esp?.nombre}>
+    <PortalLayout
+      items={items}
+      portalLabel="Portal Profesional"
+      userName={prof.nombre}
+      userMeta={esp?.nombre}
+    >
       <Outlet />
     </PortalLayout>
   );

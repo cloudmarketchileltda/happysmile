@@ -1,9 +1,11 @@
 # PRD — Happy Smile: Configuración Local y Correcciones
 
 ## Fecha
+
 18 de junio de 2026
 
 ## Objetivo
+
 Poner en funcionamiento el proyecto **Happy Smile** (portal clínico dental) en entorno local, corrigiendo errores de build y documentando la configuración necesaria.
 
 ---
@@ -11,11 +13,14 @@ Poner en funcionamiento el proyecto **Happy Smile** (portal clínico dental) en 
 ## 1. Instalación de Dependencias
 
 ### 1.1 Gestor de paquetes
+
 El proyecto usa **Bun** como gestor de paquetes y runtime. Cuenta con:
+
 - `bun.lock` — lockfile de dependencias
 - `bunfig.toml` — configuración de Bun
 
 ### 1.2 Comando de instalación
+
 ```bash
 bun install
 ```
@@ -24,16 +29,16 @@ bun install
 
 ### 1.3 Dependencias principales instaladas
 
-| Categoría | Paquetes clave |
-|-----------|---------------|
-| **Framework** | `react@19`, `react-dom@19`, `@tanstack/react-start@1.167.50`, `@tanstack/react-router@1.168.25` |
-| **Build** | `vite@8`, `@tailwindcss/vite@4.2.4`, `@vitejs/plugin-react@5` |
-| **Estado** | `zustand@5` |
-| **UI** | Radix UI primitives, `lucide-react`, `recharts@3.8.1`, `sonner@2`, `cmdk`, `vaul` |
-| **Forms** | `react-hook-form@7.73.1`, `@hookform/resolvers@5`, `zod@3.25.76` |
-| **Estilos** | `tailwindcss@4.2.4`, `tailwind-merge`, `tw-animate-css`, `class-variance-authority` |
-| **Utilidades** | `date-fns@4`, `clsx` |
-| **Dev** | `typescript@5.9.3`, `eslint@9`, `prettier@3.8.3`, `nitro@3.0.260603-beta` |
+| Categoría      | Paquetes clave                                                                                  |
+| -------------- | ----------------------------------------------------------------------------------------------- |
+| **Framework**  | `react@19`, `react-dom@19`, `@tanstack/react-start@1.167.50`, `@tanstack/react-router@1.168.25` |
+| **Build**      | `vite@8`, `@tailwindcss/vite@4.2.4`, `@vitejs/plugin-react@5`                                   |
+| **Estado**     | `zustand@5`                                                                                     |
+| **UI**         | Radix UI primitives, `lucide-react`, `recharts@3.8.1`, `sonner@2`, `cmdk`, `vaul`               |
+| **Forms**      | `react-hook-form@7.73.1`, `@hookform/resolvers@5`, `zod@3.25.76`                                |
+| **Estilos**    | `tailwindcss@4.2.4`, `tailwind-merge`, `tw-animate-css`, `class-variance-authority`             |
+| **Utilidades** | `date-fns@4`, `clsx`                                                                            |
+| **Dev**        | `typescript@5.9.3`, `eslint@9`, `prettier@3.8.3`, `nitro@3.0.260603-beta`                       |
 
 ---
 
@@ -54,6 +59,7 @@ Error: Unexpected splitNode type ☝️: TSNonNullExpression
 ```
 
 **Archivo original (roto):**
+
 ```tsx
 // src/routes/admin.financiero.tsx (antes de la corrección)
 import { createFileRoute } from "@tanstack/react-router";
@@ -70,25 +76,27 @@ export const Route = createFileRoute("/admin/financiero")({
 1. **Se creó un componente compartido** `src/components/admin-panel-financiero.tsx` extrayendo la lógica del dashboard financiero desde `admin.index.tsx`.
 
 2. **Se simplificó `admin.index.tsx`** para que use el componente compartido:
+
    ```tsx
    import { createFileRoute } from "@tanstack/react-router";
    import { AdminPanelFinanciero } from "@/components/admin-panel-financiero";
-   
+
    export const Route = createFileRoute("/admin/")({
      head: () => ({ meta: [{ title: "Panel Financiero — Happy Smile" }] }),
      component: AdminHome,
    });
-   
+
    function AdminHome() {
      return <AdminPanelFinanciero />;
    }
    ```
 
 3. **Se reescribió `admin.financiero.tsx`** para usar directamente el componente compartido:
+
    ```tsx
    import { createFileRoute } from "@tanstack/react-router";
    import { AdminPanelFinanciero } from "@/components/admin-panel-financiero";
-   
+
    export const Route = createFileRoute("/admin/financiero")({
      head: () => ({ meta: [{ title: "Panel Financiero — Admin Happy Smile" }] }),
      component: AdminPanelFinanciero,
@@ -105,12 +113,12 @@ export const Route = createFileRoute("/admin/financiero")({
 
 ## 3. Archivos Modificados / Creados
 
-| Archivo | Acción | Descripción |
-|---------|--------|-------------|
-| `src/components/admin-panel-financiero.tsx` | **Creado** | Componente compartido del Panel Financiero (extraído de `admin.index.tsx`) |
-| `src/routes/admin.index.tsx` | **Modificado** | Ahora importa y usa `AdminPanelFinanciero` desde el componente compartido |
-| `src/routes/admin.financiero.tsx` | **Modificado** | Ahora importa y usa `AdminPanelFinanciero` en lugar de re-exportar desde `admin.index` |
-| `src/routeTree.gen.ts` | **Generado** | Árbol de rutas generado automáticamente por TanStack Router |
+| Archivo                                     | Acción         | Descripción                                                                            |
+| ------------------------------------------- | -------------- | -------------------------------------------------------------------------------------- |
+| `src/components/admin-panel-financiero.tsx` | **Creado**     | Componente compartido del Panel Financiero (extraído de `admin.index.tsx`)             |
+| `src/routes/admin.index.tsx`                | **Modificado** | Ahora importa y usa `AdminPanelFinanciero` desde el componente compartido              |
+| `src/routes/admin.financiero.tsx`           | **Modificado** | Ahora importa y usa `AdminPanelFinanciero` en lugar de re-exportar desde `admin.index` |
+| `src/routeTree.gen.ts`                      | **Generado**   | Árbol de rutas generado automáticamente por TanStack Router                            |
 
 ---
 
@@ -160,20 +168,21 @@ bun run format
 
 ## 5. Estado del Proyecto Post-Correcciones
 
-| Aspecto | Estado |
-|---------|--------|
-| `bun install` (491 paquetes) | ✅ Correcto |
-| `bun run dev` (servidor local) | ✅ HTTP 200 en `localhost:8080` |
-| `bun run build:dev` (cliente + SSR) | ✅ Build exitoso (sin errores) |
-| Generación de `routeTree.gen.ts` | ✅ Automática via plugin |
+| Aspecto                                           | Estado                             |
+| ------------------------------------------------- | ---------------------------------- |
+| `bun install` (491 paquetes)                      | ✅ Correcto                        |
+| `bun run dev` (servidor local)                    | ✅ HTTP 200 en `localhost:8080`    |
+| `bun run build:dev` (cliente + SSR)               | ✅ Build exitoso (sin errores)     |
+| Generación de `routeTree.gen.ts`                  | ✅ Automática via plugin           |
 | Panel financiero (`/admin` y `/admin/financiero`) | ✅ Componente compartido funcional |
-| Landing page público (`/`) | ✅ 200 OK |
-| Login (`/login`) | ✅ 200 OK |
-| Portales (paciente, profesional, admin) | ✅ Todos los layouts funcionales |
+| Landing page público (`/`)                        | ✅ 200 OK                          |
+| Login (`/login`)                                  | ✅ 200 OK                          |
+| Portales (paciente, profesional, admin)           | ✅ Todos los layouts funcionales   |
 
 ### 5.1 Warnings (no bloqueantes)
 
 Durante el build se observaron estos warnings informativos:
+
 1. **vite-tsconfig-paths**: El plugin es detectado, pero Vite 8 ya soporta resolución de tsconfig paths nativamente mediante `resolve.tsconfigPaths: true`.
 2. **Chunk size**: `index-CJAId116.js` (558 kB después de minificar) supera el límite recomendado de 500 kB. Esto es debido a recharts y lucide-react principalmente. Podría optimizarse con lazy loading.
 
@@ -182,6 +191,7 @@ Durante el build se observaron estos warnings informativos:
 ## 6. Mejora: Acceso por Perfiles desde Login
 
 ### 6.1 Problema
+
 El selector de portales (`PortalSwitcher`) estaba visible en el header público y en los headers internos de cada portal, permitiendo navegar entre perfiles (Público, Paciente, Profesional, Administración) directamente desde cualquier página.
 
 ### 6.2 Solución aplicada
@@ -199,23 +209,23 @@ El selector de portales (`PortalSwitcher`) estaba visible en el header público 
 
 ### 6.3 Archivos modificados
 
-| Archivo | Acción | Descripción |
-|---------|--------|-------------|
-| `src/components/public-header.tsx` | Modificado | Eliminado import y uso de `PortalSwitcher` |
-| `src/components/portal-layout.tsx` | Modificado | Eliminado import y uso de `PortalSwitcher` |
-| `src/routes/_public.login.tsx` | Modificado | Rediseñado con selector de 3 perfiles + login paciente |
+| Archivo                            | Acción     | Descripción                                            |
+| ---------------------------------- | ---------- | ------------------------------------------------------ |
+| `src/components/public-header.tsx` | Modificado | Eliminado import y uso de `PortalSwitcher`             |
+| `src/components/portal-layout.tsx` | Modificado | Eliminado import y uso de `PortalSwitcher`             |
+| `src/routes/_public.login.tsx`     | Modificado | Rediseñado con selector de 3 perfiles + login paciente |
 
 ## 7. Notas Adicionales
 
 ### 7.1 Autenticación
+
 El login actual es completamente mock. Cualquier credencial redirige al portal paciente como "María González". No hay verificación de roles ni sesión real.
 
 ### 7.2 Datos
+
 Todos los datos son mock (en memoria via Zustand). No hay persistencia ni API backend. Los cambios se pierden al recargar la página.
 
-### 7.3 Lovable
-El proyecto está conectado a Lovable. Se debe evitar reescribir el historial de git (force push, rebase, squash, amend) para no romper la integración.
+### 7.3 Nitro / SSR
 
-### 7.4 Nitro / SSR
-El plugin de deploy Nitro está desactivado porque no se detecta contexto Lovable. Se puede forzar con `nitro: true` en la configuración si es necesario para despliegue.
+El plugin de deploy Nitro está desactivado. Se puede habilitar con `nitro: true` en la configuración si es necesario para despliegue.
 </write_to_file>

@@ -71,35 +71,49 @@ export const useClinic = create<ClinicState>((set) => ({
   profesionalActualId,
 
   addPaciente: (p) => set((s) => ({ pacientes: [...s.pacientes, { ...p, id: uid() }] })),
-  updatePaciente: (id, p) => set((s) => ({ pacientes: s.pacientes.map((x) => (x.id === id ? { ...x, ...p } : x)) })),
+  updatePaciente: (id, p) =>
+    set((s) => ({ pacientes: s.pacientes.map((x) => (x.id === id ? { ...x, ...p } : x)) })),
   deletePaciente: (id) => set((s) => ({ pacientes: s.pacientes.filter((x) => x.id !== id) })),
 
   addProfesional: (p) => set((s) => ({ profesionales: [...s.profesionales, { ...p, id: uid() }] })),
-  updateProfesional: (id, p) => set((s) => ({ profesionales: s.profesionales.map((x) => (x.id === id ? { ...x, ...p } : x)) })),
-  deleteProfesional: (id) => set((s) => ({ profesionales: s.profesionales.filter((x) => x.id !== id) })),
+  updateProfesional: (id, p) =>
+    set((s) => ({ profesionales: s.profesionales.map((x) => (x.id === id ? { ...x, ...p } : x)) })),
+  deleteProfesional: (id) =>
+    set((s) => ({ profesionales: s.profesionales.filter((x) => x.id !== id) })),
 
-  addEspecialidad: (e) => set((s) => ({ especialidades: [...s.especialidades, { ...e, id: uid() }] })),
-  updateEspecialidad: (id, e) => set((s) => ({ especialidades: s.especialidades.map((x) => (x.id === id ? { ...x, ...e } : x)) })),
-  deleteEspecialidad: (id) => set((s) => ({ especialidades: s.especialidades.filter((x) => x.id !== id) })),
+  addEspecialidad: (e) =>
+    set((s) => ({ especialidades: [...s.especialidades, { ...e, id: uid() }] })),
+  updateEspecialidad: (id, e) =>
+    set((s) => ({
+      especialidades: s.especialidades.map((x) => (x.id === id ? { ...x, ...e } : x)),
+    })),
+  deleteEspecialidad: (id) =>
+    set((s) => ({ especialidades: s.especialidades.filter((x) => x.id !== id) })),
 
   addCita: (c) => set((s) => ({ citas: [...s.citas, { ...c, id: uid() }] })),
-  updateCita: (id, c) => set((s) => ({ citas: s.citas.map((x) => (x.id === id ? { ...x, ...c } : x)) })),
+  updateCita: (id, c) =>
+    set((s) => ({ citas: s.citas.map((x) => (x.id === id ? { ...x, ...c } : x)) })),
   deleteCita: (id) => set((s) => ({ citas: s.citas.filter((x) => x.id !== id) })),
 
   addMaterial: (m) => set((s) => ({ materiales: [...s.materiales, { ...m, id: uid() }] })),
-  updateMaterial: (id, m) => set((s) => ({ materiales: s.materiales.map((x) => (x.id === id ? { ...x, ...m } : x)) })),
+  updateMaterial: (id, m) =>
+    set((s) => ({ materiales: s.materiales.map((x) => (x.id === id ? { ...x, ...m } : x)) })),
   deleteMaterial: (id) => set((s) => ({ materiales: s.materiales.filter((x) => x.id !== id) })),
 
   addGasto: (g) => set((s) => ({ gastos: [...s.gastos, { ...g, id: uid() }] })),
-  updateGasto: (id, g) => set((s) => ({ gastos: s.gastos.map((x) => (x.id === id ? { ...x, ...g } : x)) })),
+  updateGasto: (id, g) =>
+    set((s) => ({ gastos: s.gastos.map((x) => (x.id === id ? { ...x, ...g } : x)) })),
   deleteGasto: (id) => set((s) => ({ gastos: s.gastos.filter((x) => x.id !== id) })),
 
   marcarCuotaPagada: (tratamientoId, numero) =>
     set((s) => ({
       tratamientos: s.tratamientos.map((t) =>
         t.id === tratamientoId
-          ? { ...t, cuotas: t.cuotas.map((c) => (c.numero === numero ? { ...c, estado: "Pagado" } : c)) }
-          : t
+          ? {
+              ...t,
+              cuotas: t.cuotas.map((c) => (c.numero === numero ? { ...c, estado: "Pagado" } : c)),
+            }
+          : t,
       ),
     })),
 }));

@@ -1,6 +1,14 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { PortalLayout, type NavItem } from "@/components/portal-layout";
-import { LayoutDashboard, Stethoscope, Calendar, CalendarPlus, CreditCard, User, ClipboardEdit } from "lucide-react";
+import {
+  LayoutDashboard,
+  Stethoscope,
+  Calendar,
+  CalendarPlus,
+  CreditCard,
+  User,
+  ClipboardEdit,
+} from "lucide-react";
 import { useClinic } from "@/store/clinic-store";
 
 const items: NavItem[] = [
@@ -20,7 +28,12 @@ export const Route = createFileRoute("/paciente")({
 function PacienteLayout() {
   const paciente = useClinic((s) => s.pacientes.find((p) => p.id === s.pacienteActualId)!);
   return (
-    <PortalLayout items={items} portalLabel="Portal Paciente" userName={paciente.nombre} userMeta={`Ficha ${paciente.ficha}`}>
+    <PortalLayout
+      items={items}
+      portalLabel="Portal Paciente"
+      userName={paciente.nombre}
+      userMeta={`Ficha ${paciente.ficha}`}
+    >
       <Outlet />
     </PortalLayout>
   );

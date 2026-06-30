@@ -6,9 +6,16 @@ export const Route = createFileRoute("/_public/")({
   head: () => ({
     meta: [
       { title: "Happy Smile — Tu sonrisa, nuestra pasión" },
-      { name: "description", content: "Clínica dental integral en Santiago. Implantes, ortodoncia, endodoncia y más. Agenda online." },
+      {
+        name: "description",
+        content:
+          "Clínica dental integral en Santiago. Implantes, ortodoncia, endodoncia y más. Agenda online.",
+      },
       { property: "og:title", content: "Happy Smile — Tu sonrisa, nuestra pasión" },
-      { property: "og:description", content: "Clínica dental integral en Santiago. Agenda online en minutos." },
+      {
+        property: "og:description",
+        content: "Clínica dental integral en Santiago. Agenda online en minutos.",
+      },
     ],
   }),
   component: HomePage,
@@ -32,7 +39,8 @@ function HomePage() {
               Tu sonrisa, <span className="text-brand">nuestra pasión</span>
             </h1>
             <p className="mt-5 max-w-lg text-base text-muted-foreground sm:text-lg">
-              En Happy Smile combinamos tecnología, especialistas certificados y un trato cercano para cuidar de tu salud bucal en cada etapa.
+              En Happy Smile combinamos tecnología, especialistas certificados y un trato cercano
+              para cuidar de tu salud bucal en cada etapa.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
@@ -49,13 +57,23 @@ function HomePage() {
               </Link>
             </div>
             <div className="mt-8 flex flex-wrap gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2"><span className="font-display text-2xl font-bold text-foreground">+5.000</span> pacientes felices</div>
-              <div className="flex items-center gap-2"><span className="font-display text-2xl font-bold text-foreground">15+</span> años de experiencia</div>
+              <div className="flex items-center gap-2">
+                <span className="font-display text-2xl font-bold text-foreground">+5.000</span>{" "}
+                pacientes felices
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="font-display text-2xl font-bold text-foreground">15+</span> años de
+                experiencia
+              </div>
             </div>
           </div>
           <div className="relative grid place-items-center">
             <div className="relative aspect-square w-full max-w-md rounded-3xl bg-gradient-to-br from-brand to-brand/70 p-1 shadow-2xl">
-              <img src="/centro2.jpg" alt="Happy Smile Clínica Dental" className="h-full w-full rounded-[22px] object-cover" />
+              <img
+                src="/centro2.jpg"
+                alt="Happy Smile Clínica Dental"
+                className="h-full w-full rounded-[22px] object-cover"
+              />
               <div className="absolute -bottom-4 -left-4 rounded-2xl bg-background p-4 shadow-lg ring-1 ring-border">
                 <div className="text-xs font-medium text-muted-foreground">Próxima hora</div>
                 <div className="font-display text-sm font-bold text-foreground">Mañana 10:00</div>
@@ -70,7 +88,9 @@ function HomePage() {
       <section className="bg-background py-16">
         <div className="mx-auto max-w-7xl px-4">
           <div className="mb-10 text-center">
-            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">Nuestras Especialidades</h2>
+            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
+              Nuestras Especialidades
+            </h2>
             <p className="mt-2 text-muted-foreground">Cuidamos cada detalle de tu salud bucal</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -85,7 +105,9 @@ function HomePage() {
                 </div>
                 <h3 className="font-display text-lg font-bold text-foreground">{e.nombre}</h3>
                 <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{e.descripcion}</p>
-                <div className="mt-4 text-sm font-medium text-brand group-hover:underline">Conocer más →</div>
+                <div className="mt-4 text-sm font-medium text-brand group-hover:underline">
+                  Conocer más →
+                </div>
               </Link>
             ))}
           </div>
@@ -99,9 +121,31 @@ function HomePage() {
             <h2 className="font-display text-3xl font-bold text-foreground">Encuéntranos</h2>
             <p className="mt-2 text-muted-foreground">Visítanos en pleno centro de Providencia.</p>
             <div className="mt-6 space-y-4">
-              <div className="flex items-start gap-3"><MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand" /><div><div className="font-semibold">Dirección</div><div className="text-sm text-muted-foreground">La Concepcion 553, Cunco, Chile</div></div></div>
-              <div className="flex items-start gap-3"><Phone className="mt-0.5 h-5 w-5 shrink-0 text-brand" /><div><div className="font-semibold">Teléfono</div><div className="text-sm text-muted-foreground">+56 2 2345 6789</div></div></div>
-              <div className="flex items-start gap-3"><Clock className="mt-0.5 h-5 w-5 shrink-0 text-brand" /><div><div className="font-semibold">Horario</div><div className="text-sm text-muted-foreground">Lun-Vie 09:00-19:00 · Sáb 10:00-14:00</div></div></div>
+              <div className="flex items-start gap-3">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand" />
+                <div>
+                  <div className="font-semibold">Dirección</div>
+                  <div className="text-sm text-muted-foreground">
+                    La Concepcion 553, Cunco, Chile
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Phone className="mt-0.5 h-5 w-5 shrink-0 text-brand" />
+                <div>
+                  <div className="font-semibold">Teléfono</div>
+                  <div className="text-sm text-muted-foreground">+56 2 2345 6789</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Clock className="mt-0.5 h-5 w-5 shrink-0 text-brand" />
+                <div>
+                  <div className="font-semibold">Horario</div>
+                  <div className="text-sm text-muted-foreground">
+                    Lun-Vie 09:00-19:00 · Sáb 10:00-14:00
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="grid min-h-[280px] place-items-center rounded-2xl border border-dashed border-border bg-brand-soft/30 text-center">

@@ -11,7 +11,9 @@ export const Route = createFileRoute("/paciente/horas")({
 
 function HorasPage() {
   const s = useClinic();
-  const mis = s.citas.filter((c) => c.pacienteId === s.pacienteActualId).sort((a, b) => +new Date(a.fechaISO) - +new Date(b.fechaISO));
+  const mis = s.citas
+    .filter((c) => c.pacienteId === s.pacienteActualId)
+    .sort((a, b) => +new Date(a.fechaISO) - +new Date(b.fechaISO));
   const now = new Date();
   const proximas = mis.filter((c) => new Date(c.fechaISO) >= now);
   const pasadas = mis.filter((c) => new Date(c.fechaISO) < now).reverse();
@@ -27,14 +29,19 @@ function HorasPage() {
             const prof = s.profesionales.find((p) => p.id === c.profesionalId);
             const esp = s.especialidades.find((e) => e.id === c.especialidadId);
             return (
-              <div key={c.id} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-lg border border-border bg-background p-3">
+              <div
+                key={c.id}
+                className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-lg border border-border bg-background p-3"
+              >
                 <div className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-brand-soft">
                   <div className="text-xs text-brand">{formatDate(c.fechaISO).slice(0, 5)}</div>
                   <div className="font-display text-sm font-bold">{formatTime(c.fechaISO)}</div>
                 </div>
                 <div className="min-w-0">
                   <div className="truncate font-semibold">{esp?.nombre}</div>
-                  <div className="truncate text-sm text-muted-foreground">{prof?.nombre} · {c.box}</div>
+                  <div className="truncate text-sm text-muted-foreground">
+                    {prof?.nombre} · {c.box}
+                  </div>
                 </div>
                 <EstadoBadge estado={c.estado} />
               </div>

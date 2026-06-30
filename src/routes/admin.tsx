@@ -1,6 +1,17 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { PortalLayout, type NavItem } from "@/components/portal-layout";
-import { LayoutDashboard, UserCog, Stethoscope, Calendar, Package, Users, TrendingUp, TrendingDown, CreditCard, PieChart } from "lucide-react";
+import {
+  LayoutDashboard,
+  UserCog,
+  Stethoscope,
+  Calendar,
+  Package,
+  Users,
+  TrendingUp,
+  TrendingDown,
+  CreditCard,
+  PieChart,
+} from "lucide-react";
 
 const items: NavItem[] = [
   { to: "/admin", label: "Panel Financiero", icon: LayoutDashboard },
@@ -19,7 +30,12 @@ export const Route = createFileRoute("/admin")({ component: AdminLayout });
 
 function AdminLayout() {
   return (
-    <PortalLayout items={items} portalLabel="Administración" userName="Administrador" userMeta="Happy Smile">
+    <PortalLayout
+      items={items}
+      portalLabel="Administración"
+      userName="Administrador"
+      userMeta="Happy Smile"
+    >
       <Outlet />
     </PortalLayout>
   );
